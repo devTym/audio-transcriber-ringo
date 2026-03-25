@@ -1,0 +1,16 @@
+{
+  "name": "app/transcriber",
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/",
+      "System\\": "system/"
+    }
+  },
+  "require": {
+    "php": ">=8.4",
+    "ext-pdo": "*",
+    "ext-redis": "*",
+    "ext-curl": "*",
+    "ext-mbstring": "*"
+  }
+}

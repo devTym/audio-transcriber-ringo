@@ -1,0 +1,26 @@
+services:
+  coordinator:
+    build:
+      context: .
+      dockerfile: docker/coordinator/Dockerfile
+    container_name: audio-transcriber
+    user: "${UID:-1000}:${GID:-1000}"
+    working_dir: /app
+    volumes:
+      - ./:/app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - .env
+    environment:
+      PYTHONUNBUFFERED: "1"
+      WHISPER_CPP_BIN: /opt/whisper.cpp/build/bin/whisper-cli
+      WHISPER_CPP_MODEL: /models/whisper.cpp/ggml-large-v3.bin
+      FASTER_WHISPER_MODEL_DIR: /models/faster-whisper-large-v3
+    depends_on:
+      - redis
+    command: [ "sleep", "infinity" ]
+
+  redis:
+    image: redis:7-alpine
+    container_name: audio-transcriber-redis
